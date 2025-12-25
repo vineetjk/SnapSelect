@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { getDb } from '../utils/database';
 import { AuthRequest } from '../middleware/auth';
@@ -63,7 +63,7 @@ export const getClients = async (req: AuthRequest, res: Response): Promise<void>
   }
 };
 
-export const getClientByLink = async (req: Request, res: Response): Promise<void> => {
+export const getClientByLink = async (req: Request<{ uniqueLink: string }>, res: Response): Promise<void> => {
   try {
     const { uniqueLink } = req.params;
     const db = await getDb();

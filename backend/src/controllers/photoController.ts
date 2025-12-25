@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs/promises';
 import { getDb } from '../utils/database';
@@ -93,7 +93,7 @@ export const getPhotos = async (req: AuthRequest, res: Response): Promise<void> 
   }
 };
 
-export const getPhotosByLink = async (req: Request, res: Response): Promise<void> => {
+export const getPhotosByLink = async (req: Request<{ uniqueLink: string }>, res: Response): Promise<void> => {
   try {
     const { uniqueLink } = req.params;
     const db = await getDb();
@@ -160,7 +160,7 @@ export const togglePhotoSelection = async (req: AuthRequest, res: Response): Pro
   }
 };
 
-export const downloadPhoto = async (req: Request, res: Response): Promise<void> => {
+export const downloadPhoto = async (req: Request<{ photoId: string }, any, any, { quality?: string }>, res: Response): Promise<void> => {
   try {
     const { photoId } = req.params;
     const { quality } = req.query;
