@@ -35,6 +35,17 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'SnapSelect API is running' });
 });
 
+// Serve frontend in production
+if (process.env.NODE_ENV === 'production') {
+  const frontendPath = path.join(__dirname, '../../frontend/dist');
+  app.use(express.static(frontendPath));
+
+  // Handle client-side routing - serve index.html for all non-API routes
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
+  });
+}
+
 // Initialize database and start server
 async function start() {
   try {

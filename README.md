@@ -176,50 +176,77 @@ All downloads include a watermark with the photographer's studio name centered o
 
 ## Production Deployment
 
+**⚠️ Important:** This app requires a backend server and **CANNOT be hosted on GitHub Pages** (which only supports static sites).
+
+### Quick Deploy Options
+
+We provide ready-to-use configurations for popular hosting platforms:
+
+1. **[Render.com](https://render.com)** (Recommended - Free tier available)
+   - Automatic deployment from `render.yaml`
+   - Free tier includes persistent storage
+   - Deploy in ~5 minutes
+
+2. **[Railway.app](https://railway.app)** (Developer-friendly)
+   - Uses `railway.json` and `nixpacks.toml`
+   - $5 free credit per month
+   - One-click deploy from GitHub
+
+3. **Docker** (Any platform)
+   - `Dockerfile` and `docker-compose.yml` included
+   - Deploy to AWS, Google Cloud, DigitalOcean, etc.
+   - Full control over infrastructure
+
+4. **[Vercel](https://vercel.com)** (Limited - demo only)
+   - Uses `vercel.json`
+   - Has file upload size limitations
+   - Better for demos than production
+
+### Detailed Deployment Guide
+
+**See [DEPLOYMENT.md](./DEPLOYMENT.md)** for comprehensive step-by-step instructions including:
+- Platform-specific deployment steps
+- Environment variable configuration
+- Database and file storage setup
+- Scaling and monitoring
+- Security checklist
+- Troubleshooting guide
+
+### Quick Start - Render.com
+
+```bash
+# 1. Push to GitHub (already done!)
+# 2. Sign up at render.com
+# 3. New → Blueprint → Connect your repo
+# 4. Render auto-detects render.yaml and deploys
+# 5. Set JWT_SECRET environment variable
+# 6. Done! Your app is live
+```
+
 ### Environment Variables
 
-For production, update the following in `backend/.env`:
+Required for production:
 
 ```env
-PORT=5000
 NODE_ENV=production
-JWT_SECRET=<generate-a-secure-random-string>
-DATABASE_PATH=./database.sqlite
+JWT_SECRET=<generate-secure-random-string>  # openssl rand -base64 32
+PORT=5000
+DATABASE_PATH=./data/database.sqlite
 UPLOAD_DIR=./uploads
 ```
 
 ### Build Commands
 
-**Backend:**
 ```bash
-cd backend
+# Install all dependencies
+npm run install:all
+
+# Build both frontend and backend
 npm run build
+
+# Start in production mode
 npm start
 ```
-
-**Frontend:**
-```bash
-cd frontend
-npm run build
-# Serve the dist folder using a static server like nginx or serve
-```
-
-### Security Recommendations
-
-1. Change `JWT_SECRET` to a strong random string
-2. Use HTTPS in production
-3. Set up proper CORS origins
-4. Consider using a cloud storage service (AWS S3, Cloudinary) for photos
-5. Implement rate limiting
-6. Add file size limits and validation
-7. Set up regular database backups
-
-## File Storage
-
-By default, photos are stored in `backend/uploads/` directory. For production, consider:
-- Using cloud storage (AWS S3, Google Cloud Storage, Cloudinary)
-- Implementing CDN for faster photo delivery
-- Setting up automated backups
 
 ## License
 

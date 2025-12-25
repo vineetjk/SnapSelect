@@ -7,7 +7,11 @@
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
     "build:backend": "cd backend && npm run build",
-    "build:frontend": "cd frontend && npm run build"
+    "build:frontend": "cd frontend && npm run build",
+    "build": "npm run build:backend && npm run build:frontend",
+    "start": "cd backend && npm start",
+    "docker:build": "docker build -t snapselect .",
+    "docker:run": "docker run -p 5000:5000 snapselect"
   },
   "keywords": ["photography", "photo-sharing", "gallery"],
   "author": "",

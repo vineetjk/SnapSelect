@@ -1,0 +1,15 @@
+node_modules
+*/node_modules
+npm-debug.log
+.env
+.env.local
+*.sqlite
+*.db
+uploads
+backend/uploads
+backend/database.sqlite
+frontend/dist
+backend/dist
+.git
+.gitignore
+README.md

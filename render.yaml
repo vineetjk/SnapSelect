@@ -1,0 +1,41 @@
+services:
+  # Backend API
+  - type: web
+    name: snapselect-backend
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: cd backend && npm install && npm run build
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /opt/render/project/src/backend/database.sqlite
+      - key: UPLOAD_DIR
+        value: /opt/render/project/src/backend/uploads
+    disk:
+      name: snapselect-data
+      mountPath: /opt/render/project/src/backend
+      sizeGB: 1
+
+  # Frontend
+  - type: web
+    name: snapselect-frontend
+    env: static
+    region: oregon
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://snapselect-backend.onrender.com/api/*
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
