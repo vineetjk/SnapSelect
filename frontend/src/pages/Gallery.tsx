@@ -24,9 +24,12 @@ function Gallery() {
       ]);
       setClient(clientRes.data);
       setPhotos(photosRes.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load gallery:', error);
-      alert('Gallery not found');
+      console.error('Error details:', error.response?.data);
+      console.error('Status code:', error.response?.status);
+      const errorMsg = error.response?.data?.error || 'Gallery not found';
+      alert(`Error: ${errorMsg}\n\nThis might be because:\n- Gallery doesn't exist\n- Database was reset (Render free tier)\n- Network issue\n\nCheck browser console for details.`);
     } finally {
       setLoading(false);
     }
