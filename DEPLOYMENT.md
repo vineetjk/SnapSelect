@@ -2,11 +2,21 @@
 
 This guide covers multiple deployment options for the SnapSelect photo sharing platform.
 
+## ⚠️ Important: Data Persistence
+
+This app uses **SQLite database** and stores **uploaded photos on disk**. Most free hosting tiers have **ephemeral storage** - data will be lost on restart/redeploy.
+
+**For production use with persistent data:**
+- **Railway.app** - Persistent storage on free tier ✅
+- **Render.com Paid** - $7/month includes 1GB persistent disk ✅
+- **Docker + VPS** - Full control with persistent volumes ✅
+- **Render.com Free** - ❌ No persistence (resets on restart)
+
 ## Quick Start - Free Hosting Options
 
 ### Option 1: Render.com (Recommended - Free Tier)
 
-Render provides free hosting for both frontend and backend with persistent storage.
+Render provides free hosting for Node.js applications.
 
 **Steps:**
 
@@ -18,19 +28,23 @@ Render provides free hosting for both frontend and backend with persistent stora
    - Click "New" → "Blueprint"
    - Connect your GitHub repository
    - Render will automatically detect `render.yaml`
-   - Click "Apply" to deploy both services
+   - Click "Apply" to deploy
    - Wait 5-10 minutes for deployment
 
-4. **Set Environment Variables:**
-   - Go to the backend service
-   - Add environment variable: `JWT_SECRET` with a random secure string
-   - Example: `openssl rand -base64 32` to generate one
+4. **JWT Secret is auto-generated** - No additional setup needed!
 
 5. **Access your app:**
-   - Frontend will be at: `https://snapselect-frontend.onrender.com`
-   - Backend API at: `https://snapselect-backend.onrender.com`
+   - Your app will be at: `https://snapselect.onrender.com`
+   - Both frontend and backend are served from the same URL
 
-**Note:** Free tier sleeps after 15 minutes of inactivity. First request may take 30-60 seconds.
+**Important Notes:**
+- ⚠️ **Free tier does NOT have persistent storage** - database and uploads will reset on each deploy or restart
+- Service sleeps after 15 minutes of inactivity - first request takes 30-60 seconds to wake up
+- **For persistent data**, upgrade to paid tier ($7/month) which includes 1GB disk storage
+
+**Alternative for Free Tier:**
+- Use Railway.app (Option 2) which has better free tier features
+- Or upgrade Render to paid tier for production use
 
 ---
 
