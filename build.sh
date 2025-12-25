@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-echo "Installing backend dependencies..."
+echo "Installing backend dependencies (including dev dependencies)..."
 cd backend
-npm install
+npm install --include=dev
 
 echo "Building backend..."
 npm run build
