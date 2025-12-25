@@ -4,8 +4,8 @@ services:
     name: snapselect
     env: node
     plan: free
-    buildCommand: npm run install:all && npm run build
-    startCommand: npm start
+    buildCommand: bash build.sh
+    startCommand: cd backend && npm start
     envVars:
       - key: NODE_ENV
         value: production
