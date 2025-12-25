@@ -8,9 +8,9 @@ npm install --include=dev
 echo "Building backend..."
 npm run build
 
-echo "Installing frontend dependencies..."
+echo "Installing frontend dependencies (including dev dependencies)..."
 cd ../frontend
-npm install
+npm install --include=dev
 
 echo "Building frontend..."
 npm run build
