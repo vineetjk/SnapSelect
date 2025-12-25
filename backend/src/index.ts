@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve uploaded files statically
 const uploadDir = process.env.UPLOAD_DIR || './uploads';
-app.use('/uploads', express.static(uploadDir));
+app.use('/api/uploads', express.static(uploadDir));
 
 // Routes
 app.use('/api/auth', authRoutes);
